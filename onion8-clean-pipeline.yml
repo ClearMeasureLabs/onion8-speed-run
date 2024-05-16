@@ -18,7 +18,7 @@ stages:
       pool:
         vmImage: 'windows-latest'
       variables:
-      - group: Integration-Build
+      - group: onion8-clean-start-tdd
       steps:
       # Dependencies
       - task: UseDotNet@2
