@@ -3,7 +3,7 @@ steps:
 - task: AzureCLI@2
   displayName: 'Query and store subscription id for unique resource name'
   inputs:
-    azureSubscription: 'onion-architecture-maui-azure-dotnet-8-pure-azdo'
+    azureSubscription: '$(serviceConnection)'
     scriptType: 'bash'
     scriptLocation: 'inlineScript'
     inlineScript: |
@@ -15,7 +15,7 @@ steps:
 - task: AzureCLI@2
   displayName: 'Create resource group'
   inputs:
-    azureSubscription: 'onion-architecture-maui-azure-dotnet-8-pure-azdo'
+    azureSubscription: '$(serviceConnection)'
     scriptType: 'ps'
     scriptLocation: 'inlineScript'
     inlineScript: az group create --name $(TDDResourceGroup) --location $(AzureLocation)
@@ -23,7 +23,7 @@ steps:
 - task: AzureResourceGroupDeployment@2
   displayName: 'Create container app environment'
   inputs:
-    azureSubscription: 'onion-architecture-maui-azure-dotnet-8-pure-azdo'
+    azureSubscription: '$(serviceConnection)'
     resourceGroupName: $(TDDResourceGroup)
     location: $(AzureLocation)
     csmFile: src/Core/ContainerEnvironmentARM.json
@@ -43,7 +43,7 @@ steps:
 - task: AzureResourceGroupDeployment@2
   displayName: 'Create database resource in Azure'
   inputs:
-    azureSubscription: 'onion-architecture-maui-azure-dotnet-8-pure-azdo'
+    azureSubscription: '$(serviceConnection)'
     resourceGroupName: $(TDDResourceGroup)
     location: $(AzureLocation)
     csmFile: src/Database/DatabaseARM.json
@@ -59,7 +59,7 @@ steps:
 - task: AzureCLI@2
   displayName: 'Get database connection string'
   inputs: 
-    azureSubscription: 'onion-architecture-maui-azure-dotnet-8-pure-azdo'
+    azureSubscription: '$(serviceConnection)'
     scriptType: 'ps'
     scriptLocation: 'inlineScript' 
     inlineScript: |
@@ -71,26 +71,26 @@ steps:
 - task: AzureResourceGroupDeployment@2
   displayName: 'Create container app environment'
   inputs:
-    azureSubscription: 'onion-architecture-maui-azure-dotnet-8-pure-azdo'
+    azureSubscription: '$(serviceConnection)'
     resourceGroupName: $(TDDResourceGroup)
     location: $(AzureLocation)
     csmFile: src/Core/ContainerEnvironmentARM.json
-    overrideParameters: -location $(AzureLocation) -environment_name $(ResourceGroupName)-$(Environment)-cae -appInsightsConnectionString $(AppInsightsConnectionString) -containerAppLogAnalyticsName $(containerAppLogAnalyticsName) -subscriptionId $(SubscriptionId) -ResourceGroupName $(TDDResourceGroup)
+    overrideParameters: -location $(AzureLocation) -environment_name $(ResourceGroupName)-$(Environment)-cae -appInsightsConnectionString $(appInsightsConnectionString) -containerAppLogAnalyticsName $(containerAppLogAnalyticsName) -subscriptionId $(SubscriptionId) -ResourceGroupName $(TDDResourceGroup)
 
 - task: AzureResourceGroupDeployment@2
   displayName: 'Create container app'
   inputs:
-    azureSubscription: 'onion-architecture-maui-azure-dotnet-8-pure-azdo'
+    azureSubscription: '$(serviceConnection)'
     resourceGroupName: $(TDDResourceGroup)
     location: $(AzureLocation)
     csmFile: src/Core/ContainerARM.json
     #overrideParameters: -containerappName "$(ContainerAppName)" -location "$(AzureLocation)" -environment_name "$(ResourceGroupName)-$(Environment)-cae" -container_image "$(RegistryLoginServer)/churchbulletin.ui:$(Build.BuildNumber)" -registry_password "$(ContainerRegistryPassword)" -connection_string "$(DbConnString)" -http_port "$(HttpPort)" -appInsightsConnectionString "$(AppInsightsConnectionString)" -registry_login_server "$(RegistryLoginServer)" -app_id "$(AcrContainerAppId)"
-    overrideParameters: -app_id "$(AcrContainerAppId)" -aspnetcore_environment "$(AspnetcoreEnvironment)" -appInsightsConnectionString "$(AppInsightsConnectionString)" -connection_string "$(DbConnString)" -containerappName "$(ContainerAppName)" -container_image "$(RegistryLoginServer)/churchbulletin.ui:$(Build.BuildNumber)" -environment_name "$(ResourceGroupName)-$(Environment)-cae" -http_port "$(HttpPort)" -location "$(AzureLocation)" -registry_login_server "$(RegistryLoginServer)" -registry_password "$(ContainerRegistryPassword)"
+    overrideParameters: -app_id "$(AcrContainerAppId)" -aspnetcore_environment "$(AspnetcoreEnvironment)" -appInsightsConnectionString "$(appInsightsConnectionString)" -connection_string "$(DbConnString)" -containerappName "$(ContainerAppName)" -container_image "$(registryLoginServer)/churchbulletin.ui:$(Build.BuildNumber)" -environment_name "$(ResourceGroupName)-$(Environment)-cae" -http_port "$(HttpPort)" -location "$(AzureLocation)" -registry_login_server "$(registryLoginServer)" -registry_password "$(containerRegistryPassword)"
 
 - task: AzureCLI@2
   displayName: 'Get the Fully Qualified Domain Name for the container app'
   inputs:
-    azureSubscription: 'onion-architecture-maui-azure-dotnet-8-pure-azdo'
+    azureSubscription: '$(serviceConnection)'
     scriptType: 'ps'
     scriptLocation: 'inlineScript'
     inlineScript: |
@@ -103,10 +103,10 @@ steps:
 - task: AzureCLI@2
   displayName: 'Add revision to container app'
   inputs:
-    azureSubscription: 'onion-architecture-maui-azure-dotnet-8-pure-azdo'
+    azureSubscription: '$(serviceConnection)'
     scriptType: 'ps'
     scriptLocation: 'inlineScript'
-    inlineScript: az containerapp update --name $(ContainerAppName) --resource-group $(TDDResourceGroup) --image $(ContainerImage) --set-env-vars ConnectionStrings__SqlConnectionString="$(DbConnString)" HTTP_PORT=$(HttpPort) 
+    inlineScript: az containerapp update --name $(containerAppName) --resource-group $(TDDResourceGroup) --image $(containerImage) --set-env-vars ConnectionStrings__SqlConnectionString="$(DbConnString)" HTTP_PORT=$(HttpPort) 
 
 #- task: PowerShell@2
 #  displayName: 'Check version of deployed app'
