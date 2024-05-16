@@ -31,5 +31,5 @@ Create Variable Groups for pipeline (one per desired environment)
     httpPort                            8080
     registryLoginServer                 gathered from Azure Container Registry/Overview
     resourceGroupName                   arbitrary name for given resource group, frequently constructed from text-$(environment)
-    serviceConnection                   name of the Service Connection created above
+
 
