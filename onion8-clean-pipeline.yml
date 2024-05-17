@@ -149,8 +149,7 @@ stages:
         value: $(appInsightsConnectionStringTDD)
       - name: AspnetcoreEnvironment
         value: $(AspnetcoreEnvironmentTest)
-      - name: serviceConnection
-        value: $(serviceConnection)
+
       environment: 'TDD'
       strategy:
         runOnce:
