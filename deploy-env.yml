@@ -54,7 +54,7 @@ steps:
   inputs:
     targetType: filePath
     filePath: src/Database/scripts/UpdateAzurePipelineSql.ps1
-    arguments: -DatabaseServer '$(SubscriptionId)-dotnet8-$(Environment).database.windows.net' -DatabaseName '$(DatabaseName)' -DatabaseAction '$(DatabaseAction)' -DatabaseUser '$(DatabaseUser)' -DatabasePassword '$(DatabasePassword)'
+    arguments: -DatabaseServer '$(SubscriptionId)-dotnet8-$(Environment).database.windows.net' -DatabaseName '$(DatabaseName)-$(Environment)' -DatabaseAction '$(DatabaseAction)' -DatabaseUser '$(DatabaseUser)' -DatabasePassword '$(DatabasePassword)'
 
 - task: AzureCLI@2
   displayName: 'Get database connection string'

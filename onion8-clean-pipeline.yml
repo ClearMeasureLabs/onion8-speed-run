@@ -136,7 +136,7 @@ stages:
       - name: databasePassword
         value: '$(databasePasswordTest)'
       - name: databaseName
-        value: '$(databaseNameTest)'
+        value: '$(databaseName)'
       - name: containerAppName
         value: '$(ContainerAppNameTest)'
       - name: containerImage
