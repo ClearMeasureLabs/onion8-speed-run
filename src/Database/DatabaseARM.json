@@ -97,7 +97,7 @@
           "name": "AllowAllWindowsAzureIps",
           "type": "firewallrules",
           "location": "[resourceGroup().location]",
-          "apiVersion": "2014-04-01-preview",
+          "apiVersion": "2022-05-01-preview",
           "dependsOn": [
             "[resourceId('Microsoft.Sql/servers', parameters('databaseserverName'))]"
           ],
