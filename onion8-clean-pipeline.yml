@@ -132,13 +132,13 @@ stages:
       - name: Environment
         value: 'tdd'
       - name: databaseUser
-        value: '$(databaseUserTest)'
+        value: '$(databaseUser)'
       - name: databasePassword
-        value: '$(databasePasswordTest)'
+        value: '$(databasePassword)'
       - name: databaseName
         value: '$(databaseName)'
       - name: containerAppName
-        value: '$(ContainerAppNameTest)'
+        value: '$(ContainerAppName)'
       - name: containerImage
         value: '$(registryLoginServer)/churchbulletin.ui:$(Build.BuildNumber)'
       - name: containerAppLogAnalyticsName
