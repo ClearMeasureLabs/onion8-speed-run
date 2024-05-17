@@ -109,7 +109,7 @@ stages:
 
       - task: Docker@2
         inputs:
-          containerRegistry: 'onion8cleanstartacr'
+          containerRegistry: 'onion8cleanstartACR'
           repository: 'ChurchBulletin.UI'
           command: 'buildAndPush'
           Dockerfile: '**/Dockerfile'
