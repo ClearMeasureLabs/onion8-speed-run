@@ -63,11 +63,24 @@ stages:
         inputs:
           codeCoverageTool: Cobertura
           summaryFileLocation: '$(System.DefaultWorkingDirectory)/**/build/test/**/In/**/coverage.cobertura.xml'
-      - task: NuGetCommand@2
+        
+      - task: PublishPipelineArtifact@1
+        displayName: Publish Ui to Pipeline
         inputs:
-          command: 'push'
-          packagesToPush: '.\build\*.nupkg'
-          publishVstsFeed: '$(AzureFeedName)'
+          targetPath: .\build\WebApp
+          artifactName: ChurchBulletin.Ui
+
+      - task: PublishPipelineArtifact@1
+        displayName: Publish Database to Pipeline
+        inputs:
+          targetPath: .\build\WebApp
+          artifactName: ChurchBulletin.Database
+      
+      # - task: NuGetCommand@2
+      #   inputs:
+      #     command: 'push'
+      #     packagesToPush: '.\build\*.nupkg'
+      #     publishVstsFeed: '$(AzureFeedName)'
 
     - job: 'DockerBuildandPush'
       pool:
@@ -77,20 +90,26 @@ stages:
       dependsOn: Build
  
       steps:
-      - task: DownloadPackage@1
-        displayName: 'Download UI Package'
+      # - task: DownloadPackage@1
+      #   displayName: 'Download UI Package'
+      #   inputs:
+      #     packageType: 'nuget'
+      #     feed: '$(AzureFeedName)'
+      #     view: 'Local'
+      #     definition: 'ChurchBulletin.UI'
+      #     version: '$(Build.BuildNumber)'
+      #     downloadPath: '$(System.DefaultWorkingDirectory)/built'
+      #     extract: true
+
+      - task: DownloadPipelineArtifact@2
+        displayName: Publish Ui to Pipeline
         inputs:
-          packageType: 'nuget'
-          feed: '$(AzureFeedName)'
-          view: 'Local'
-          definition: 'ChurchBulletin.UI'
-          version: '$(Build.BuildNumber)'
-          downloadPath: '$(System.DefaultWorkingDirectory)/built'
-          extract: true
+          targetPath: $(System.DefaultWorkingDirectory)/built
+          artifactName: ChurchBulletin.Ui
 
       - task: Docker@2
         inputs:
-          containerRegistry: 'OnionArchitectureMauiDotnet8AzDO'
+          containerRegistry: 'onion8cleanstartacr'
           repository: 'ChurchBulletin.UI'
           command: 'buildAndPush'
           Dockerfile: '**/Dockerfile'
