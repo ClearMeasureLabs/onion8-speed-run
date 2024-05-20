@@ -131,14 +131,14 @@ stages:
         value: '$(ResourceGroupName)-TDD-$(Build.BuildNumber)'
       - name: Environment
         value: 'tdd'
-      - name: databaseServerName
-        value: $(databaseServerName)
-      - name: databaseUser
-        value: '$(databaseUser)'
-      - name: databasePassword
-        value: '$(databasePassword)'
-      - name: databaseName
-        value: '$(databaseName)'
+      # - name: databaseServerName
+      #   value: $(databaseServerName)
+      # - name: databaseUser
+      #   value: '$(databaseUser)'
+      # - name: databasePassword
+      #   value: '$(databasePassword)'
+      # - name: databaseName
+      #   value: '$(databaseName)'
       - name: containerAppName
         value: '$(ContainerAppName)'
       - name: containerImage
