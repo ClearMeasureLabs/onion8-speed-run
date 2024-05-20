@@ -54,7 +54,7 @@ steps:
   inputs:
     targetType: filePath
     filePath: src/Database/scripts/UpdateAzurePipelineSql.ps1
-    arguments: -DatabaseServer '$(SubscriptionId)-clean-dotnet8-sqlserver-$(Environment)' -DatabaseName 'onioncleandb-$(Environment)' -DatabaseAction '$(DatabaseAction)' -DatabaseUser '$(DatabaseUser)' -DatabasePassword '$(DatabasePassword)'
+    arguments: -DatabaseServer '$(SubscriptionId)-onion8sql-$(Environment)' -DatabaseName 'onioncleandb-$(Environment)' -DatabaseAction '$(DatabaseAction)' -DatabaseUser '$(DatabaseUser)' -DatabasePassword '$(DatabasePassword)'
 
 - task: AzureCLI@2
   displayName: 'Get database connection string'
