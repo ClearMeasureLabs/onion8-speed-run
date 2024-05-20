@@ -131,6 +131,8 @@ stages:
         value: '$(ResourceGroupName)-TDD-$(Build.BuildNumber)'
       - name: Environment
         value: 'tdd'
+      - name: databaseServerName
+        value: $(databaseServerName)
       - name: databaseUser
         value: '$(databaseUser)'
       - name: databasePassword
