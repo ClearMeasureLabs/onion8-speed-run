@@ -139,10 +139,10 @@ stages:
       #   value: '$(databasePassword)'
       # - name: databaseName
       #   value: '$(databaseName)'
-      - name: containerAppName
-        value: '$(ContainerAppName)'
-      - name: containerImage
-        value: '$(registryLoginServer)/churchbulletin.ui:$(Build.BuildNumber)'
+      # - name: containerAppName
+      #   value: '$(ContainerAppName)'
+      # - name: containerImage
+      #   value: '$(registryLoginServer)/churchbulletin.ui:$(Build.BuildNumber)'
       - name: containerAppLogAnalyticsName
         value: 'tdd-Log-Analytics'
       - name: appInsightsName
