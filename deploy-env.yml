@@ -47,14 +47,14 @@ steps:
     resourceGroupName: $(TDDResourceGroup)
     location: $(AzureLocation)
     csmFile: src/Database/DatabaseARM.json
-    overrideParameters: -databaseserverName $(databaseServerName) -databaseLogin $(DatabaseUser) -databaseLoginPassword $(DatabasePassword) -skuCapacity 1 -databaseName onioncleandb-$(Environment) -requestedServiceObjectiveName $(DatabasePerformanceLevel)
+    overrideParameters: -databaseserverName 'novar-onion8-db' -databaseLogin $(DatabaseUser) -databaseLoginPassword $(DatabasePassword) -skuCapacity 1 -databaseName onioncleandb-$(Environment) -requestedServiceObjectiveName $(DatabasePerformanceLevel)
 
 - task: PowerShell@2
   displayName: 'Create database schema'
   inputs:
     targetType: filePath
     filePath: src/Database/scripts/UpdateAzurePipelineSql.ps1
-    arguments: -DatabaseServer '$(databaseServerName)' -DatabaseName 'onioncleandb-$(Environment)' -DatabaseAction '$(DatabaseAction)' -DatabaseUser '$(DatabaseUser)' -DatabasePassword '$(DatabasePassword)'
+    arguments: -DatabaseServer 'novar-onion8-db' -DatabaseName 'onioncleandb-$(Environment)' -DatabaseAction '$(DatabaseAction)' -DatabaseUser '$(DatabaseUser)' -DatabasePassword '$(DatabasePassword)'
 
 - task: AzureCLI@2
   displayName: 'Get database connection string'
