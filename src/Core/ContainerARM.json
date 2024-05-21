@@ -42,6 +42,10 @@
       "defaultValue": "registryLogin",
       "type": "string"
     },
+    "subscriptionId": {
+      "defaultValue": "registryLogin",
+      "type": "string"
+    },
     "app_id": {
       "defaultValue": "appId",
       "type": "string"
@@ -49,17 +53,28 @@
     "uamiName": {
       "defaultValue": "appId",
       "type": "string"
+    },
+    "uamiRGName": {
+      "defaultValue": "appId",
+      "type": "string"
     }
   },
-  "variables": {},
+  "variables": {
+
+    "uami": "[resourceId(parameters('uamiRGName'), 'Microsoft.ManagedIdentity/userAssignedIdentities/', '')]"
+
+  },
   "resources": [
     {
-      "apiVersion": "2022-03-01",
+      "apiVersion": "2023-05-02-preview",
       "type": "Microsoft.App/containerApps",
       "name": "[parameters('containerappName')]",
       "location": "[parameters('location')]",
       "identity": {
-        "type": "None"
+        "type": "UserAssigned",
+        "userAssignedIdentities": {
+          "[format('{0}', variables('uami'), format('id-{0}', parameters('uamiName')))]": {}
+        }
       },
       "properties": {
         "managedEnvironmentId": "[resourceId('Microsoft.App/managedEnvironments', parameters('environment_name'))]",
@@ -84,7 +99,7 @@
           "registries": [
             {
 
-              "identity": "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', format('id-{0}', parameters('uamiName')))]",
+              "identity": "[resourceId(parameters('uamiRGName'), 'Microsoft.ManagedIdentity/userAssignedIdentities/', parameters('uamiName'))]",
               "server": "[parameters('registry_login_server')]"
 
             }
