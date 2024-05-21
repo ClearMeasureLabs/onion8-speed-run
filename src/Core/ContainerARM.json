@@ -61,7 +61,7 @@
   },
   "variables": {
 
-    "uami": "[resourceId(parameters('uamiRGName'), 'Microsoft.ManagedIdentity/userAssignedIdentities/', '')]"
+    "uami": "[resourceId(parameters('uamiRGName'), 'Microsoft.ManagedIdentity/userAssignedIdentities/', parameters('uamiName') )]"
 
   },
   "resources": [
@@ -73,7 +73,7 @@
       "identity": {
         "type": "UserAssigned",
         "userAssignedIdentities": {
-          "[format('{0}', variables('uami'), format('id-{0}', parameters('uamiName')))]": {}
+          "[format('{0}', variables('uami'), format('id-{0}'))]": {}
         }
       },
       "properties": {
@@ -99,7 +99,7 @@
           "registries": [
             {
 
-              "identity": "[resourceId(parameters('uamiRGName'), 'Microsoft.ManagedIdentity/userAssignedIdentities/', parameters('uamiName'))]",
+              "identity": "[variables('uami')]",
               "server": "[parameters('registry_login_server')]"
 
             }
