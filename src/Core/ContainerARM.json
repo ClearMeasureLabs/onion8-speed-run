@@ -45,6 +45,10 @@
     "app_id": {
       "defaultValue": "appId",
       "type": "string"
+    },
+    "uamiName": {
+      "defaultValue": "appId",
+      "type": "string"
     }
   },
   "variables": {},
@@ -79,9 +83,10 @@
           },
           "registries": [
             {
-              "server": "[parameters('registry_login_server')]",
-              "username": "[parameters('app_id')]",
-              "passwordSecretRef": "registrypassword"
+
+              "identity": "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', format('id-{0}', parameters('uamiName')))]",
+              "server": "[parameters('registry_login_server')]"
+
             }
           ],
           "dapr": {
