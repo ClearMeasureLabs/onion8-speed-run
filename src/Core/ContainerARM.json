@@ -73,7 +73,7 @@
       "identity": {
         "type": "UserAssigned",
         "userAssignedIdentities": {
-          "[format('{0}', variables('uami'), format('id-{0}'))]": {}
+          "[variables('uami')]" :{}
         }
       },
       "properties": {
