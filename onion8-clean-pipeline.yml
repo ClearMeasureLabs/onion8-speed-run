@@ -248,7 +248,7 @@ stages:
         value: '$(ResourceGroupName)-UAT'
       - name: Environment
         value: 'uat'
-      - name: DatabaseUser
+      # - name: DatabaseUser
       #   value: '$(DatabaseUserUAT)'
       # - name: DatabasePassword
       #   value: '$(DatabasePasswordTest)'
