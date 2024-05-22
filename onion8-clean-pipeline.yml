@@ -213,21 +213,21 @@ stages:
           deploy:
             steps:
 
-            - task: AzureCLI@2
-              inputs:
-                azureSubscription: 'onion-architecture-maui-azure-dotnet-8-pure-azdo'
-                scriptType: 'ps'
-                scriptLocation: 'inlineScript'
-                inlineScript: |
-                  az config set extension.use_dynamic_install=yes_without_prompt
-                  $containerAppURL = az containerapp show --resource-group $(TDD-Resource-Group) --name $(TDD-App-Name) --query properties.configuration.ingress.fqdn
-                  $containerAppURL = $containerAppURL -replace '"', ''
-                  [System.Environment]::SetEnvironmentVariable("containerAppURL", $containerAppURL, "User")
+            # - task: AzureCLI@2
+            #   inputs:
+            #     azureSubscription: 'onion8-clean-serviceconnection'
+            #     scriptType: 'ps'
+            #     scriptLocation: 'inlineScript'
+            #     inlineScript: |
+            #       az config set extension.use_dynamic_install=yes_without_prompt
+            #       $containerAppURL = az containerapp show --resource-group $(TDD-Resource-Group) --name $(TDD-App-Name) --query properties.configuration.ingress.fqdn
+            #       $containerAppURL = $containerAppURL -replace '"', ''
+            #       [System.Environment]::SetEnvironmentVariable("containerAppURL", $containerAppURL, "User")
 
             - task: AzureCLI@2
               displayName: 'Delete TDD Resources'
               inputs:
-                azureSubscription: 'onion-architecture-maui-azure-dotnet-8-pure-azdo'
+                azureSubscription: 'onion8-clean-serviceconnection'
                 scriptType: 'ps'
                 scriptLocation: 'inlineScript'
                 inlineScript: |
