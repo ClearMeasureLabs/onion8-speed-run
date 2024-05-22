@@ -1,35 +1,45 @@
 Pre-work:
 
-Create Azure Container Registry (Azure Portal)
-Create Azure DevOps Service Connection (Azure DevOps/Project Settings/Service Connections) using Service Principal - Automated
-Create App Registration
-Create secret in App Registration
+Create one-time-setup Resource Group
+    Create Azure Container Registry (Azure Portal)
+    Create User Assigned Managed Identity (Azure Portal)
+Create Azure DevOps Service Connection (Azure DevOps/Project Settings/Service Connections) using Service Principal - Automated. Check "Grant pipeline permissions" in the lower left corner.
 Create UAT Resource Group
     Create loganalyticsworkspace
     Create appinsights pointed to loganalytics
 Create Prod Resource Group
     Create loganalyticsworkspace
     Create appinsights pointed to loganalytics
-Create Variable Groups for pipeline (one per desired environment)
-    ACRContainerAppId                   gathered from App Registration created above
-    appInsightsConnectionString         gathered from App Insights/Properties in the appsinsights instance in the environment's resource group
+Create Variable Groups for pipeline (one per desired environment - it's easiest to create tdd and clone it for successive environments)
+    *appInsightsConnectionString         gathered from App Insights/Properties in the appsinsights instance in the environment's resource group
     AzureLocation                       appropriate Azure location for resources
-    containerAppEnvironmentName         arbitrary name for container app environment
-    containerAppLogAnalyticsName        gathered from the Overview page of the App Insights instance in the environment's resource group
-    containerAppName                    arbitrary name for the container app
+    *containerAppEnvironmentName        arbitrary name for container app environment
+    *containerAppLogAnalyticsName       gathered from the Overview page of the App Insights instance in the environment's resource group
+    *containerAppName                   arbitrary name for the container app
     containerAppScaledUpCPU             .5
     containerAppScaledUpMem             1.0
     containerAppScaledUpReplicas        2
-    containerRegistryPassword           gathered from App Registrations/Certificates and Secrets
-    databaseAction                      Update
+    !databaseAction                      Update
     databaseEdition                     Basic
-    databaseName                        arbitrary name for Azure SQL database
+    *databaseName                       arbitrary name for Azure SQL database
     databasePassword                    arbitrary password to be set in Azure SQL 
     databasePerformanceLevel            Basic
     databaseUser                        arbitrary user name to be set in Azure SQL 
-    environment                         three/four-letter abbreviation for environment name
+    *databaseServerName
+    *environment                        three/four-letter abbreviation for environment name
     httpPort                            8080
-    registryLoginServer                 gathered from Azure Container Registry/Overview
-    resourceGroupName                   arbitrary name for given resource group, frequently constructed from text-$(environment)
+    !registryLoginServer                 gathered from Azure Container Registry/Overview
+    *resourceGroupName                   arbitrary name for given resource group, frequently constructed from text-$(environment)
+    !uamiName                            arbitrary name for User Assigned Managed Identity
+    !uamiRGName                          the name of the Resource Group in which the User Assigned Managed Identity exists
+
+    The variables marked with * need to be customized per-environment in the Variable Group.
+    Variables marked with ! should be consistent across all variable groups.
+    Unmarked variables can be set per-environment without impact to other environments.
+
+Create Environments (one per desired Environment) - these will require authorization when invoked during the first run of the pipeline.
+
+Create Pipeline (Azure DevOps Portal)
+
 
 

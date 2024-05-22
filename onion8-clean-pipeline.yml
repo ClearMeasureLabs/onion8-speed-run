@@ -245,7 +245,7 @@ stages:
       - name: branch
         value: $[coalesce(variables['system.pullRequest.sourceBranch'], variables['build.sourceBranch'])]
       - name: TDDResourceGroup
-        value: '$(ResourceGroupName)-UAT'
+        value: '$(ResourceGroupName)'
       - name: Environment
         value: 'uat'
       # - name: DatabaseUser
@@ -264,14 +264,14 @@ stages:
         value: 'onion-architecture-maui-azure-dotnet-8-UAT-Insights'
       - name: containerAppLogAnalyticsName
         value: 'UAT-Log-Analytics'
-      - name: SubscriptionId
-        value: $(SubscriptionId)
-      - name: AppInsightsConnectionString
-        value: $(AppInsightsConnectionStringUAT)
-      - name: AspnetcoreEnvironment
-        value: $(AspnetcoreEnvironmentUAT)
-      - name: serviceConnection
-        value: $(serviceConnection)
+      # - name: SubscriptionId
+      #   value: $(SubscriptionId)
+      # - name: AppInsightsConnectionString
+      #   value: $(AppInsightsConnectionStringUAT)
+      # - name: AspnetcoreEnvironment
+      #   value: $(AspnetcoreEnvironmentUAT)
+      # - name: serviceConnection
+      #   value: $(serviceConnection)
       environment: 'UAT'
       strategy:
         runOnce:
@@ -323,29 +323,29 @@ stages:
       - name: branch
         value: $[coalesce(variables['system.pullRequest.sourceBranch'], variables['build.sourceBranch'])]
       - name: TDDResourceGroup
-        value: '$(ResourceGroupName)-Prod'
+        value: '$(ResourceGroupName)'
       - name: Environment
         value: 'prod'
-      # - name: DatabaseUser
-      #   value: '$(DatabaseUserProd)'
-      # - name: DatabasePassword
-      #   value: '$(DatabasePasswordTest)'
-      # - name: DatabaseName
-      #   value: '$(DatabaseNameProd)'
-      # - name: ContainerAppName
-      #   value: '$(ContainerAppNameProd)'
-      # - name: AppInsightsConnectionString
-      #   value: '$(AppInsightsConnectionStringProd)'
-      # - name: appInsightsName
-      #   value: 'onion-architecture-maui-azure-dotnet-8-Prod-Insights'
+      # # - name: DatabaseUser
+      # #   value: '$(DatabaseUserProd)'
+      # # - name: DatabasePassword
+      # #   value: '$(DatabasePasswordTest)'
+      # # - name: DatabaseName
+      # #   value: '$(DatabaseNameProd)'
+      # # - name: ContainerAppName
+      # #   value: '$(ContainerAppNameProd)'
+      - name: AppInsightsConnectionString
+        value: '$(AppInsightsConnectionStringProd)'
+      - name: appInsightsName
+        value: 'onion-architecture-maui-azure-dotnet-8-Prod-Insights'
       - name: containerAppLogAnalyticsName
         value: 'Prod-Log-Analytics'
-      # - name: ContainerImage
-      #   value: '$(RegistryLoginServer)/churchbulletin.ui:$(Build.BuildNumber)'
-      - name: AspnetcoreEnvironment
-        value: $(AspnetcoreEnvironmentProd)
-      - name: serviceConnection
-        value: $(serviceConnection)
+      # # - name: ContainerImage
+      # #   value: '$(RegistryLoginServer)/churchbulletin.ui:$(Build.BuildNumber)'
+      # - name: AspnetcoreEnvironment
+      #   value: $(AspnetcoreEnvironmentProd)
+      # - name: serviceConnection
+      #   value: $(serviceConnection)
       environment: 'Prod'
       strategy:
         runOnce:
