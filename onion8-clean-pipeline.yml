@@ -319,7 +319,7 @@ stages:
       pool:
         vmImage: 'windows-latest'
       variables:
-      - group: onion8-clean-start-tdd
+      - group: onion8-clean-start-prod
       - name: branch
         value: $[coalesce(variables['system.pullRequest.sourceBranch'], variables['build.sourceBranch'])]
       - name: TDDResourceGroup
