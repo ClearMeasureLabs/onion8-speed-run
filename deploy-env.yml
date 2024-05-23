@@ -27,7 +27,7 @@ steps:
     resourceGroupName: $(TDDResourceGroup)
     location: $(AzureLocation)
     csmFile: src/Core/ContainerEnvironmentARM.json
-    overrideParameters: -location $(AzureLocation) -environment_name $(TDDResourceGroupName)-cae -appInsightsConnectionString $(AppInsightsConnectionString) -containerAppLogAnalyticsName $(containerAppLogAnalyticsName) -subscriptionId $(SubscriptionId) -ResourceGroupName $(TDDResourceGroup)
+    overrideParameters: -location $(AzureLocation) -environment_name $(containerAppEnvironmentName) -appInsightsConnectionString $(AppInsightsConnectionString) -containerAppLogAnalyticsName $(containerAppLogAnalyticsName) -subscriptionId $(SubscriptionId) -ResourceGroupName $(TDDResourceGroup)
 
 - task: PowerShell@2
   displayName: 'Generate version integer for database server name'
@@ -75,7 +75,7 @@ steps:
     resourceGroupName: $(TDDResourceGroup)
     location: $(AzureLocation)
     csmFile: src/Core/ContainerEnvironmentARM.json
-    overrideParameters: -location $(AzureLocation) -environment_name $(ResourceGroupName)-$(Environment)-cae -appInsightsConnectionString $(appInsightsConnectionString) -containerAppLogAnalyticsName $(containerAppLogAnalyticsName) -subscriptionId $(SubscriptionId) -ResourceGroupName $(TDDResourceGroup)
+    overrideParameters: -location $(AzureLocation) -environment_name $(containerAppEnvironmentName)-$(Environment)-cae -appInsightsConnectionString $(appInsightsConnectionString) -containerAppLogAnalyticsName $(containerAppLogAnalyticsName) -subscriptionId $(SubscriptionId) -ResourceGroupName $(TDDResourceGroup)
 
 - task: AzureResourceGroupDeployment@2
   displayName: 'Create container app'
