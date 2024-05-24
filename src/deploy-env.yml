@@ -47,14 +47,14 @@ steps:
     resourceGroupName: $(TDDResourceGroup)
     location: $(AzureLocation)
     csmFile: src/Database/DatabaseARM.json
-    overrideParameters: -databaseserverName $(SubscriptionId)-dotnet8-$(Environment) -databaseLogin $(DatabaseUser) -databaseLoginPassword $(DatabasePassword) -skuCapacity 1 -databaseName $(DatabaseName) -requestedServiceObjectiveName $(DatabasePerformanceLevel)
+    overrideParameters: -databaseserverName $(databaseName) -databaseLogin $(DatabaseUser) -databaseLoginPassword $(DatabasePassword) -skuCapacity 1 -databaseName $(DatabaseName) -requestedServiceObjectiveName $(DatabasePerformanceLevel)
 
 - task: PowerShell@2
   displayName: 'Create database schema'
   inputs:
     targetType: filePath
     filePath: src/Database/scripts/UpdateAzurePipelineSql.ps1
-    arguments: -DatabaseServer '$(SubscriptionId)-dotnet8-$(Environment).database.windows.net' -DatabaseName '$(DatabaseName)' -DatabaseAction '$(DatabaseAction)' -DatabaseUser '$(DatabaseUser)' -DatabasePassword '$(DatabasePassword)'
+    arguments: -DatabaseServer '$(databaseName).database.windows.net' -DatabaseName '$(DatabaseName)' -DatabaseAction '$(DatabaseAction)' -DatabaseUser '$(DatabaseUser)' -DatabasePassword '$(DatabasePassword)'
 
 - task: AzureCLI@2
   displayName: 'Get database connection string'
