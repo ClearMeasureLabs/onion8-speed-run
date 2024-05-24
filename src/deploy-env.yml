@@ -27,7 +27,7 @@ steps:
     resourceGroupName: $(TDDResourceGroup)
     location: $(AzureLocation)
     csmFile: src/Core/ContainerEnvironmentARM.json
-    overrideParameters: -location $(AzureLocation) -environment_name $(ResourceGroupName)-$(Environment)-cae -appInsightsConnectionString $(AppInsightsConnectionString) -containerAppLogAnalyticsName $(containerAppLogAnalyticsName) -subscriptionId $(SubscriptionId) -ResourceGroupName $(TDDResourceGroup)
+    overrideParameters: -location $(AzureLocation) -environment_name $(containerAppEnvironmentName) -appInsightsConnectionString $(AppInsightsConnectionString) -containerAppLogAnalyticsName $(containerAppLogAnalyticsName) -subscriptionId $(SubscriptionId) -ResourceGroupName $(TDDResourceGroup)
 
 - task: PowerShell@2
   displayName: 'Generate version integer for database server name'
@@ -47,14 +47,14 @@ steps:
     resourceGroupName: $(TDDResourceGroup)
     location: $(AzureLocation)
     csmFile: src/Database/DatabaseARM.json
-    overrideParameters: -databaseserverName $(databaseName) -databaseLogin $(DatabaseUser) -databaseLoginPassword $(DatabasePassword) -skuCapacity 1 -databaseName $(DatabaseName) -requestedServiceObjectiveName $(DatabasePerformanceLevel)
+    overrideParameters: -databaseserverName $(databaseName) -databaseLogin $(DatabaseUser) -databaseLoginPassword $(DatabasePassword) -skuCapacity 1 -databaseName onioncleandb-$(Environment) -requestedServiceObjectiveName $(DatabasePerformanceLevel)
 
 - task: PowerShell@2
   displayName: 'Create database schema'
   inputs:
     targetType: filePath
     filePath: src/Database/scripts/UpdateAzurePipelineSql.ps1
-    arguments: -DatabaseServer '$(databaseName).database.windows.net' -DatabaseName '$(DatabaseName)' -DatabaseAction '$(DatabaseAction)' -DatabaseUser '$(DatabaseUser)' -DatabasePassword '$(DatabasePassword)'
+    arguments: -DatabaseServer '$(databaseName).database.windows.net' -DatabaseName 'onioncleandb-$(Environment)' -DatabaseAction '$(DatabaseAction)' -DatabaseUser '$(databaseUser)' -DatabasePassword '$(databasePassword)'
 
 - task: AzureCLI@2
   displayName: 'Get database connection string'
@@ -75,7 +75,7 @@ steps:
     resourceGroupName: $(TDDResourceGroup)
     location: $(AzureLocation)
     csmFile: src/Core/ContainerEnvironmentARM.json
-    overrideParameters: -location $(AzureLocation) -environment_name $(ResourceGroupName)-$(Environment)-cae -appInsightsConnectionString $(appInsightsConnectionString) -containerAppLogAnalyticsName $(containerAppLogAnalyticsName) -subscriptionId $(SubscriptionId) -ResourceGroupName $(TDDResourceGroup)
+    overrideParameters: -location $(AzureLocation) -environment_name $(containerAppEnvironmentName)-$(Environment)-cae -appInsightsConnectionString $(appInsightsConnectionString) -containerAppLogAnalyticsName $(containerAppLogAnalyticsName) -subscriptionId $(SubscriptionId) -ResourceGroupName $(TDDResourceGroup)
 
 - task: AzureResourceGroupDeployment@2
   displayName: 'Create container app'
@@ -85,7 +85,7 @@ steps:
     location: $(AzureLocation)
     csmFile: src/Core/ContainerARM.json
     #overrideParameters: -containerappName "$(ContainerAppName)" -location "$(AzureLocation)" -environment_name "$(ResourceGroupName)-$(Environment)-cae" -container_image "$(RegistryLoginServer)/churchbulletin.ui:$(Build.BuildNumber)" -registry_password "$(ContainerRegistryPassword)" -connection_string "$(DbConnString)" -http_port "$(HttpPort)" -appInsightsConnectionString "$(AppInsightsConnectionString)" -registry_login_server "$(RegistryLoginServer)" -app_id "$(AcrContainerAppId)"
-    overrideParameters: -app_id "$(AcrContainerAppId)" -aspnetcore_environment "$(AspnetcoreEnvironment)" -appInsightsConnectionString "$(appInsightsConnectionString)" -connection_string "$(DbConnString)" -containerappName "$(ContainerAppName)" -container_image "$(registryLoginServer)/churchbulletin.ui:$(Build.BuildNumber)" -environment_name "$(ResourceGroupName)-$(Environment)-cae" -http_port "$(HttpPort)" -location "$(AzureLocation)" -registry_login_server "$(registryLoginServer)" -registry_password "$(containerRegistryPassword)"
+    overrideParameters: -app_id "$(containerAdmin)" -aspnetcore_environment "$(AspnetcoreEnvironment)" -appInsightsConnectionString "$(appInsightsConnectionString)" -connection_string "$(DbConnString)" -containerappName "$(ContainerAppName)" -container_image "$(registryLoginServer)/churchbulletin.ui:$(Build.BuildNumber)" -environment_name "$(containerAppEnvironmentName)" -http_port "$(HttpPort)" -location "$(AzureLocation)" -registry_login_server "$(registryLoginServer)" -registry_password "$(containerAdminSecret)" -uamiName "$(uamiName)" -SubscriptionId "$(SubscriptionId)" -uamiRGName "$(uamiRGName)"
 
 - task: AzureCLI@2
   displayName: 'Get the Fully Qualified Domain Name for the container app'
