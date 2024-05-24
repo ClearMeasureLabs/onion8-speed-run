@@ -189,7 +189,7 @@ stages:
 
             - task: AzureCLI@2
               inputs:
-                azureSubscription: 'onion-architecture-maui-azure-dotnet-8-pure-azdo'
+                azureSubscription: 'onion8-speedrun-serviceconnection'
                 scriptType: 'ps'
                 scriptLocation: 'inlineScript'
                 inlineScript: |
@@ -201,7 +201,7 @@ stages:
             - task: AzureCLI@2
               displayName: 'Delete TDD Resources'
               inputs:
-                azureSubscription: 'onion-architecture-maui-azure-dotnet-8-pure-azdo'
+                azureSubscription: 'onion8-speedrun-serviceconnection'
                 scriptType: 'ps'
                 scriptLocation: 'inlineScript'
                 inlineScript: |
