@@ -112,6 +112,8 @@ stages:
         value: '$(ResourceGroupName)-TDD-$(Build.BuildNumber)'
       - name: Environment
         value: 'tdd'
+      - name: SubscriptionId
+        value: $(SubscriptionId)
       # - name: databaseUser
       #   value: '$(databaseUserTest)'
       # - name: databasePassword
@@ -122,14 +124,6 @@ stages:
       #   value: '$(ContainerAppNameTest)'
       # - name: containerImage
       #   value: '$(registryLoginServer)/churchbulletin.ui:$(Build.BuildNumber)'
-      - name: containerAppLogAnalyticsName
-        value: 'tdd-Log-Analytics'
-      - name: appInsightsName
-        value: 'onion-architecture-maui-azure-dotnet-8-TDD-Insights'
-      - name: appInsightsConnectionString
-        value: $(appInsightsConnectionStringTDD)
-      - name: AspnetcoreEnvironment
-        value: $(AspnetcoreEnvironmentTest)
       # - name: serviceConnection
       #   value: onion8-speedrun-serviceconnection
       environment: 'TDD'
