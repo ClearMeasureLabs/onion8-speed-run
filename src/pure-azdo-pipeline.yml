@@ -4,8 +4,8 @@ trigger:
     - none
     
 variables:
-    major: 1
-    minor: 3
+    major: 2
+    minor: 2
 name: $(major).$(minor).$(Rev:r)
 
 stages:
@@ -90,7 +90,7 @@ stages:
 
       - task: Docker@2
         inputs:
-          containerRegistry: 'OnionArchitectureMauiDotnet8AzDO'
+          containerRegistry: 'onion8-speedrun-docker-sc'
           repository: 'ChurchBulletin.UI'
           command: 'buildAndPush'
           Dockerfile: '**/Dockerfile'
@@ -105,23 +105,23 @@ stages:
       pool:
         vmImage: 'windows-latest'
       variables:
-      - group: onion8-clean-start-tdd
+      - group: onion8-speedrun-tdd
       - name: branch
         value: $[coalesce(variables['system.pullRequest.sourceBranch'], variables['build.sourceBranch'])]
       - name: TDDResourceGroup
         value: '$(ResourceGroupName)-TDD-$(Build.BuildNumber)'
       - name: Environment
         value: 'tdd'
-      - name: databaseUser
-        value: '$(databaseUserTest)'
-      - name: databasePassword
-        value: '$(databasePasswordTest)'
-      - name: databaseName
-        value: '$(databaseNameTest)'
-      - name: containerAppName
-        value: '$(ContainerAppNameTest)'
-      - name: containerImage
-        value: '$(registryLoginServer)/churchbulletin.ui:$(Build.BuildNumber)'
+      # - name: databaseUser
+      #   value: '$(databaseUserTest)'
+      # - name: databasePassword
+      #   value: '$(databasePasswordTest)'
+      # - name: databaseName
+      #   value: '$(databaseNameTest)'
+      # - name: containerAppName
+      #   value: '$(ContainerAppNameTest)'
+      # - name: containerImage
+      #   value: '$(registryLoginServer)/churchbulletin.ui:$(Build.BuildNumber)'
       - name: containerAppLogAnalyticsName
         value: 'tdd-Log-Analytics'
       - name: appInsightsName
@@ -130,8 +130,8 @@ stages:
         value: $(appInsightsConnectionStringTDD)
       - name: AspnetcoreEnvironment
         value: $(AspnetcoreEnvironmentTest)
-      - name: serviceConnection
-        value: $(serviceConnection)
+      # - name: serviceConnection
+      #   value: onion8-speedrun-serviceconnection
       environment: 'TDD'
       strategy:
         runOnce:
@@ -180,7 +180,7 @@ stages:
       pool:
         vmImage: 'windows-latest'
       variables:
-      - group: onion8-clean-start-tdd 
+      - group: onion8-speedrun-tdd 
       - name: branch
         value: $[coalesce(variables['system.pullRequest.sourceBranch'], variables['build.sourceBranch'])] 
       - name: TDD-Resource-Group
@@ -221,7 +221,7 @@ stages:
       pool:
         vmImage: 'windows-latest'
       variables:
-      - group: onion8-clean-start-tdd
+      - group: onion8-speedrun-uat
       - name: branch
         value: $[coalesce(variables['system.pullRequest.sourceBranch'], variables['build.sourceBranch'])]
       - name: TDDResourceGroup
@@ -251,7 +251,7 @@ stages:
       - name: AspnetcoreEnvironment
         value: $(AspnetcoreEnvironmentUAT)
       - name: serviceConnection
-        value: $(serviceConnection)
+        value: onion8-speedrun-serviceconnection
       environment: 'UAT'
       strategy:
         runOnce:
@@ -299,7 +299,7 @@ stages:
       pool:
         vmImage: 'windows-latest'
       variables:
-      - group: onion8-clean-start-tdd
+      - group: onion8-speedrun-prod
       - name: branch
         value: $[coalesce(variables['system.pullRequest.sourceBranch'], variables['build.sourceBranch'])]
       - name: TDDResourceGroup
@@ -325,7 +325,7 @@ stages:
       - name: AspnetcoreEnvironment
         value: $(AspnetcoreEnvironmentProd)
       - name: serviceConnection
-        value: $(serviceConnection)
+        value: onion8-speedrun-serviceconnection
       environment: 'Prod'
       strategy:
         runOnce:
